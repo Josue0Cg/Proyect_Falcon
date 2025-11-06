@@ -164,15 +164,217 @@
 /*########################### Generales ###########################*/
 html,
 body {
-    min-height: 100vh;
-    width: 100%;
-    font-family: var(--ft2);
-    scroll-behavior: smooth;
-    position: relative;
-    overflow-x: hidden !important;
-    padding: 0 !important;
-    margin: 0 !important;
-}
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* NAVBAR */
+        nav {
+            width: 100%;
+            padding: 15px 40px;
+            background: transparent;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 999999;
+        }
+
+        nav img {
+            height: 40px;
+        }
+
+        nav a {
+            color: #273c67;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 12px;
+            transition: 0.3s ease;
+        }
+
+        nav a:hover {
+            background: #273c67;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .custom-nav {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 10px 25px;
+        }
+
+        .custom-nav img {
+            height: 45px;
+        }
+
+        .custom-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .btn-acceder-navbar {
+            margin-left: auto;
+            padding: 8px 18px;
+            background: #3b71ca;
+            color: #fff !important;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: 0.3s ease;
+        }
+
+        .btn-acceder-navbar:hover {
+            background: #2c5bb0;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 10px 22px;
+            background: #0056d2;
+            color: white;
+            font-weight: 600;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            background: #003f9e;
+        }
+
+        .btn-about {
+            background: #723bca;
+        }
+
+        .btn-about:hover {
+            background: #5a2fa0;
+        }
+
+
+        /* HERO */
+        .hero {
+            width: 100%;
+            height: 100vh; /* elimina el espacio en blanco */
+            position: relative;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .hero-left {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-left img.hero-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-text {
+            position: absolute;
+            top: 28%;
+            left: 8%;
+            color: white;
+            max-width: 550px;
+        }
+
+        .hero-text h1 {
+            font-size: 60px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .hero-text h1 span {
+            color: #24614b;
+        }
+
+        .hero-text p {
+            font-size: 35px;
+            margin-top: 10px;
+        }
+
+        .hero-text a {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 14px 28px;
+            background: #273c67;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        /* HERO RIGHT */
+        .hero-right {
+            width: 40%;
+            background: #565656;
+            clip-path: polygon(20% 0%, 100% 0, 100% 100%, 0% 100%);
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            z-index: 5000;
+        }
+
+        /* ALCON PEGADO EXACTAMENTE ABAJO */
+        .alcon-fixed {
+            position: absolute;
+            bottom: 0; /* se pega al borde inferior */
+            right: 0;
+            width: 650px;
+            pointer-events: none;
+            z-index: 9000;
+        }
+
+        /* ICONOS */
+        .icons {
+            position: absolute;
+            right: 26%;
+            top: 40%;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            z-index: 12000;
+        }
+
+        .icon-circle {
+            width: 80px;
+            height: 80px;
+            background: #273c67;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .icon-circle img {
+            width: 45px;
+        }
+
+        .play-icon {
+            margin-left: -50px; /* Ajusta este valor según lo necesites */
+        }
 
 *::-webkit-scrollbar {
     width: 5px;
