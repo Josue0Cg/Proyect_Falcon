@@ -10,12 +10,6 @@ from django.utils import timezone
 from . import models
 import datetime
 import json
-import os
-import environ
-env = environ.Env()
-environ.Env.read_env()
-from django.conf import settings
-from cryptography.fernet import Fernet
 
 ALLOWED_EXTENSIONS = ['jpg', 'jpeg', 'png']
 
@@ -25,7 +19,8 @@ pages = [
         {'name': 'database', 'url': 'database_page', 'display_name': 'Database', 'icon':'fa-solid fa-database', 'access':'all'},
         {'name': 'mapa', 'url': 'update_mapa', 'display_name': 'Mapa', 'icon':'fa-solid fa-map-location-dot', 'access':'staff'},
         {'name': 'calendario', 'url': 'calendario_page', 'display_name': 'Calendario', 'icon':'fa-solid fa-calendar-days', 'access':'all'},
-        {'name': 'galería', 'url': 'vista_galeria', 'display_name': 'Galeria', 'icon':'fa-regular fa-images', 'access':'staff'},
+        {'name': 'blog', 'url': 'create_blog', 'display_name': 'Blogs', 'icon':'fa-solid fa-newspaper', 'access':'all'},
+        # {'name': 'galería', 'url': 'vista_galeria', 'display_name': 'Galeria', 'icon':'fa-regular fa-images', 'access':'staff'},
     ]
 
 # Editar Perfil ----------------------------------------------------------
@@ -146,7 +141,7 @@ def eliminar_usuario(request, user_id):
     if request.method == 'POST':
         user = get_object_or_404(User, id=user_id)
         user.delete()
-        return JsonResponse({'success': True, 'message': 'Usuario eliminado exitosamente.', 'icon': 'warning', 'position':'top'}, status=200)
+        return JsonResponse({'success': True, 'functions': 'reload', 'message': 'Usuario eliminado exitosamente.', 'icon': 'warning'}, status=200)
     return JsonResponse({'success': False, 'message': 'Acción no permitida.'}, status=403)
 
 @login_required
@@ -213,7 +208,8 @@ def banner_delete(request):
         banner_id = request.POST.get('banner_id')
         banner = get_object_or_404(models.Banners, id=banner_id)
         banner.delete()
-        return JsonResponse({'success': True, 'message': 'Banner eliminado exitosamente.', 'icon': 'warning', 'position':'top'}, status=200)
+        icon = 'warning'
+        return JsonResponse({'success': True, 'functions': 'reload', 'message': 'Banner eliminado exitosamente.', 'icon': icon}, status=200)
     return JsonResponse({'success': False, 'message': 'Acción no permitida.'}, status=403)
 
 @login_required
@@ -279,7 +275,6 @@ def banners_getitem(request):
             idPOST = data.get('id')
             dbItem = get_object_or_404(models.Banners, id=idPOST)
             data = {
-                'id':dbItem.id,
                 'titulo':dbItem.titulo,
                 'descripcion':dbItem.descripcion,
                 'redirigir':dbItem.redirigir,
@@ -292,6 +287,7 @@ def banners_getitem(request):
             return JsonResponse({'success': False, 'message': f'Ocurrió un error 😯😥 <br>{str(e)}'}, status=400)
 
     return JsonResponse({'error': 'Método no válido'}, status=400)
+
 
 # Categorias ----------------------------------------------------------
 @login_required
@@ -611,7 +607,7 @@ def mapa_data(request):
             "informacion": mapa.informacion,
             "galery_items": galery_items,
             "galery_count": galeryQuery.count(),
-            "hidename": bool(mapa.hide_name),
+            "hidename": True if mapa.hide_name else False,
             "door_coords": [float(coord) for coord in mapa.door_cords.split(",")],
             "polygons": [
                 [float(coord) for coord in mapa.p1_polygons.split(",")],
@@ -679,7 +675,7 @@ def preguntas_deleted(request):
             quest_id = request.POST.get('question_id')
             pregunta = get_object_or_404(models.Preguntas, id=quest_id)
             pregunta.delete()
-            return JsonResponse({'success': True, 'message': f'Pregunta #.{quest_id} eliminada permanentemente. 😯🫡', 'icon': 'warning', 'position':'top'}, status=200)
+            return JsonResponse({'success': True, 'message': f'Pregunta #.{quest_id} eliminada permanentemente. 😯🫡', 'icon': 'warning'}, status=200)
         except Exception as e:
             return JsonResponse({'success': False, 'message': f'Pregunta #{quest_id} no encontrada.'}, status=404)
     return JsonResponse({'success': False, 'message': 'Acción no permitida.'}, status=400)
@@ -690,60 +686,32 @@ def preguntas_deleted(request):
 def settings_update(request):
     if request.method == 'POST':
         try:
-            idPOST = request.POST.get('setId')
             qrImgPOST = request.FILES.get('qrImage')
             qrButtonPOST = request.POST.get('btnqrpost')
-            qrButton = bool(request.POST.get('btnqr'))
+            qrButton = request.POST.get('btnqr')
             aboutimgfirst = request.FILES.get('firstimage')
             aboutimgsecond = request.FILES.get('secondimage')
-            btnyearPOST = request.POST.get('btnsYearpost')
-            btnyear_calendar = bool(request.POST.get('btnsYear'))
+            btnyearpost = request.POST.get('btnsYearpost')
+            btnyear_calendar = request.POST.get('btnsYear')
             copyryear = request.POST.get('cr_year')
             utclink = request.POST.get('utclink')
-            redeslinks = request.POST.get('redeslinks')
             firstsection = request.POST.get('firstsection')
             secondsection = request.POST.get('secondsection')
             abouttext = request.POST.get('contenidoWord')
+            print(qrButtonPOST)
+            print(qrButton)
 
-            if not idPOST:
-                idPOST = '1'
-            else:
-                valH = request.POST.get('camHorizontal')
-                valV = request.POST.get('camVertical')
-                valD = request.POST.get('camDistance')
-                numAreas = request.POST.get('num_areas')
-                rowAreas = request.POST.get('row_areas')
-                colAreas = request.POST.get('col_areas')
-                areaAnim = request.POST.getlist('areaAnim')
-                areaTime = request.POST.getlist('areaTime')
-                areaWidth = request.POST.getlist('areaWidth')
-                areaHeight = request.POST.getlist('areaHeight')
-                
-                modelData = {}
-                cameraOrbit = "cameraOrbit"
-                modelData[cameraOrbit] = [valH, valV, valD]
-                
-                if qrButton:
-                    gridAreas = "gridAreas"
-                    modelData[gridAreas] = [numAreas, rowAreas, colAreas]
-                    animations = "animations"
-                    modelData[animations] = [areaAnim, areaTime, areaHeight, areaWidth]
-                    
-                redeslinks = json.dumps(modelData)
-            
-            config = get_object_or_404(models.Configuraciones, id=idPOST)
+            config = get_object_or_404(models.Configuraciones, id='1')
             if qrImgPOST:
                 config.qr_image = qrImgPOST
             if qrButtonPOST:
-                config.qr_button = qrButton
-            if btnyearPOST:
-                config.calendar_btnsYear = btnyear_calendar
+                config.qr_button = True if qrButton else False
+            if btnyearpost:
+                config.calendar_btnsYear = True if btnyear_calendar else False
             if copyryear:
                 config.copyright_year = copyryear
             if utclink:
                 config.utc_link = utclink
-            if redeslinks:
-                config.redes_sociales = redeslinks
             if firstsection:
                 config.about_text_first = abouttext
             if secondsection:
@@ -755,7 +723,7 @@ def settings_update(request):
                 
             config.save()
             
-            return JsonResponse({'success': True, 'message': f'Configuraciones Actualizadas', 'position':'top-end', 'functions':'submit'}, status=200)
+            return JsonResponse({'success': True, 'message': f'Configuraciones Actualizadas', 'position':'top-end'}, status=200)
         except Exception as e:
             return JsonResponse({'success': False, 'message': f'Ocurrio un error. {str(e)}'}, status=404)
     return JsonResponse({'success': False, 'message': 'Acción no permitida.'}, status=400)
@@ -855,65 +823,3 @@ def galeria_upload_images(request):
             return JsonResponse({'error': str(e)}, status=400)
     return JsonResponse({'success': False, 'message': 'Método no permitido.'}, status=405)
 
-
-# Variables del Entorno env ----------------------------------------------------------
-@login_required
-@never_cache
-def get_env(request):    
-    variable_keys = ['OPENAI_API_KEY', 'ENCRYPTION_KEY', 'TMP', 'WINDIR', 'USERNAME']
-    env_variables = {key: env(key) for key in variable_keys if env(key, None) is not None}
-    return JsonResponse(env_variables)
-
-def set_env(request):
-    if request.method == 'POST':
-        # Obtener el nombre y el valor de la variable desde el formulario
-        variable_name = request.POST.get('variable_name')
-        variable_value = request.POST.get('variable_value')
-        
-        encryption_key = os.getenv("ENCRYPTION_KEY").encode()
-        fernet = Fernet(encryption_key)
-        variable_value_encode = fernet.encrypt(variable_value.encode())
-        variable_value_encode = variable_value_encode.decode()
-        
-        # Validar que ambos valores hayan sido proporcionados
-        if not variable_name or not variable_value:
-            return JsonResponse({'success': False, 'message': 'Debe proporcionar el nombre y el valor de la variable'}, status=400)
-
-        # Obtener todas las variables actuales del archivo .env
-        env_variables = {key: env(key) for key in env.ENVIRON.keys()}        
-
-        # Actualizar o agregar la variable proporcionada
-        env_variables[variable_name] = variable_value_encode
-
-        # Usar la ruta del archivo .env desde settings.py
-        env_file_path = settings.ENV_FILE_PATH
-
-        # Imprimir la ruta del archivo en la terminal para verificarla
-        print(f"Ruta del archivo .env: {env_file_path}")
-
-        try:
-            # Escribir las variables actualizadas en el archivo .env
-            with open(env_file_path, 'w') as file:
-                for key, value in env_variables.items():
-                    file.write(f"{key}={value}\n")
-
-            return JsonResponse({'success': True, 'message': f'{variable_name} actualizada correctamente', 'functions': 'submit'}, status=200)
-                        
-            # Leer el archivo después de la escritura para verificar si se ha modificado correctamente
-            with open(env_file_path, 'r') as file:
-                lines = file.readlines()
-                # Buscar la variable para verificar si el valor es correcto
-                for line in lines:
-                    if line.startswith(variable_name):
-                        stored_value = line.split('=')[1].strip()
-                        if stored_value == variable_value_encode:
-                            # Si todo está correcto, se retorna un éxito
-                            return JsonResponse({'success': True, 'message': f'{variable_name} actualizada correctamente', 'functions': 'submit'}, status=200)
-                        else:
-                            return JsonResponse({'success': False, 'message': f'Error al actualizar {variable_name}, los valores no coinciden'}, status=400)
-
-        except Exception as e:
-            print(f"Error al modificar el archivo .env: {e}")
-            return JsonResponse({'success': False, 'message': f'Error al modificar el archivo .env: {e}'}, status=400)
-
-    return JsonResponse({'success': False, 'message': 'Método no permitido'}, status=405)

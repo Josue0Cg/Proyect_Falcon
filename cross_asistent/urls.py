@@ -20,7 +20,6 @@ urlpatterns = [
     
     # Chatbot ----------------------------------------------------------
     path('chatbot/', chatbot.chatbot, name='chatbot'),
-    path('model_settings/', chatbot.modelsettings, name='modelsettings'),
     
     # Sesion y registro ----------------------------------------------------------
     path('logout/', views.singout, name='singout'),
@@ -84,8 +83,6 @@ urlpatterns = [
     
     # configuraciones ----------------------------------------------------------
     path('administracion/configuraciones/actualizar/', functions.settings_update, name='update_settings'),
-    path('administracion/configuraciones/get_variables/', functions.get_env, name='get_env'),
-    path('administracion/configuraciones/set_variables/', functions.set_env, name='set_env'),
     
     # Importar y Exportar ----------------------------------------------------------
     path('administracion/export/categorias/', imex_port.export_categorias, name='export_categorias'),
@@ -95,13 +92,13 @@ urlpatterns = [
     path('administracion/export/mapa/', imex_port.export_mapa, name='export_mapa'),
     path('administracion/importar/mapa/', imex_port.import_mapa, name='import_mapa'),
     path('administracion/export/banners/', imex_port.export_banner, name='export_banner'),
-    path('administracion/importar/banners/', imex_port.import_Banners, name='import_banners'),
-    path('administracion/export/preguntas/', imex_port.export_preguntas, name='export_preguntas'),
-    path('administracion/importar/preguntas/', imex_port.import_Preguntas, name='import_preguntas'),
     path('administracion/export/articulo/', imex_port.export_articulos, name='export_articulos'),
-    path('administracion/importar/articulos/', imex_port.import_Articulos, name='import_articulos'),
+    path('administracion/export/preguntas/', imex_port.export_preguntas, name='export_preguntas'),
     path('administracion/export/configuracion/', imex_port.export_configuraciones, name='export_configuraciones'),
-    path('administracion/importar/configuraciones/', imex_port.import_Configuraciones, name='import_configuraciones'),
+    path('administracion/importar/banners/', imex_port.import_Banners, name='import_Banners'),
+    path('administracion/importar/articulos/', imex_port.import_Articulos, name='import_Articulos'),
+    path('administracion/importar/preguntas/', imex_port.import_Preguntas, name='import_Preguntas'),
+    path('administracion/importar/configuraciones/', imex_port.import_Configuraciones, name='import_Configuraciones'),
 ]
 
 

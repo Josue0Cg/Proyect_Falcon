@@ -8,79 +8,38 @@ let lastText = "";
 let microphoneSpeech = true;
 let isSpeaking = false;
 
-// Activar y desactivar micrófono ###########################################
-const recVoice = $(".controls_btn_microphone");
-const textarea = document.getElementById("txtQuestion");
-const submitButton = document.getElementById("chatForm_submit");
-let finalTranscript = "";
-let recognition;
-let recognizing = false;
-
-// Dictado de texto ##################################
-const speakButton = $(".speak_btn");
-const voiceSelect = document.getElementById("voice_select");
-const rateInput = document.getElementById("rate_input");
-
 // ##############################################################################################
 // ###################################### Funciones Jquery ######################################
 // ##############################################################################################
 $(document).ready(function () {
     try {
         // abrir menu del asistente ##############################################################
-        recVoice.click(() => {
-            $(".asistent_group").addClass("open open_controls");
+        $(".controls_btn_microphone").click(() => {
+            $(".asistent_group").addClass("open open_controls bg-body-tertiary");
             $(".btn_controls").addClass("text-white");
-            changeMicrophone();
-            setTimeout(() => {
-                $(".btn_controls").addClass("readyRecVoice");
-            }, 1100);
-        });
-        function changeMicrophone() {
             if (microphoneSpeech) {
                 $("#btn_controls_icon").removeClass("fa-comment").addClass("fa-microphone");
             } else {
                 $("#btn_controls_icon").removeClass("fa-comment").addClass("fa-microphone-slash");
             }
-        }
-        if ($(".asistent_group").hasClass("open")) {
-            changeMicrophone();
-        }
-        // Abrir chat #######################
+            setTimeout(() => {
+                $(".btn_controls").addClass("readyRecVoice");
+            }, 1100);
+        });
         $(".toggle_controls").click(() => {
             microphonerecord = false;
-            const asistentGroup = $(".asistent_group.open");
-            asistentGroup.toggleClass("close_controls open_keyboard open_controls");
+            $(".asistent_group.open").toggleClass("close_controls open_keyboard open_controls");
             if (!isMobile) {
                 setTimeout(function () {
                     $(".controls_input #txtQuestion").focus();
-                }, 900);
-            }
-
-            let modelViewer = $("#asistent_model");
-            const hdrSaved = localStorage.getItem("model_hdr");
-
-            if (asistentGroup.hasClass("open_keyboard")) {
-                $("#changeScene").addClass("none").css("--delay", "7");
-                modelViewer.attr("environment-image", "");
-                modelViewer.attr("skybox-image", "");
-            } else {
-                $("#changeScene").removeClass("none").css("--delay", "3");
-                if (hdrSaved != "") {
-                    modelViewer.attr("environment-image", `/media/hdri/${hdrSaved}.hdr`);
-                    modelViewer.attr("skybox-image", `/media/hdri/${hdrSaved}.hdr`);
-                } else {
-                    modelViewer.attr("environment-image", "");
-                    modelViewer.attr("skybox-image", "");
-                }
+                }, 1500);
             }
         });
         $(".controls_btn_close").click(() => {
-            $(".asistent_group").removeClass("open open_controls close_controls open_keyboard");
+            $(".asistent_group").removeClass("open open_controls close_controls open_keyboard bg-body-tertiary");
             $(".btn_controls").removeClass("readyRecVoice");
             $("#btn_controls_icon").addClass("fa-comment").removeClass("fa-microphone");
-            if (recognizing) {
-                stopRecording();
-            }
+            stopRecording();
         });
 
         // Enviar chat con enter chatGPT ######################################
@@ -89,20 +48,6 @@ $(document).ready(function () {
                 evento.preventDefault();
                 $("#chatForm_submit").click();
             }
-        });
-
-        // Posicion de controles del asistente ######################################
-        const verticalCtrlsCheckbox = $("#vesticalCtrls");
-        const boxControls = $(".box_asistent_controls");
-
-        const isVertical = localStorage.getItem("Vertical-controls") === "true";
-        boxControls.toggleClass("controls_vertical", isVertical);
-        verticalCtrlsCheckbox.prop("checked", isVertical);
-
-        verticalCtrlsCheckbox.on("click", function () {
-            const isChecked = verticalCtrlsCheckbox.is(":checked");
-            boxControls.toggleClass("controls_vertical", isChecked);
-            localStorage.setItem("Vertical-controls", isChecked);
         });
 
         // ChatGPT Submit ####################################################
@@ -118,6 +63,13 @@ $(document).ready(function () {
 // ##############################################################################################
 
 // Activar y desactivar micrófono ###########################################
+const recVoice = $(".controls_btn_microphone");
+const textarea = document.getElementById("txtQuestion");
+const submitButton = document.getElementById("chatForm_submit");
+let finalTranscript = "";
+let recognition;
+let recognizing = false;
+
 try {
     // Verifica si el navegador soporta la Web Speech API
     if ("webkitSpeechRecognition" in window) {
@@ -150,7 +102,12 @@ try {
         recognition.onerror = function (event) {
             console.error("Error de reconocimiento:", event.error);
             if (event.error === "not-allowed") {
-                alertSToast("top", 8000, "error", "Permiso de micrófono denegado. Por favor, permite el acceso al micrófono.");
+                alertSToast(
+                    "top",
+                    8000,
+                    "error",
+                    "Permiso de micrófono denegado. Por favor, permite el acceso al micrófono."
+                );
             } else if (event.error === "no-speech") {
                 alertSToast("top", 8000, "error", "No se detectó ninguna voz. Por favor, intenta de nuevo.");
             } else if (event.error === "network") {
@@ -198,15 +155,17 @@ try {
         microphoneSpeech = false;
         console.warn("Este navegador no soporta la Web Speech API");
         $("#btn_controls_icon").addClass("fa-microphone-slash");
-        recVoice.on("click", function () {
-            alertSToast("center", 9000, "warning", "Al parecer tu navegador no permite activar el micrófono. 🤔😯😥");
-        });
+        alertSToast("center", 9000, "warning", "Al parecer tu navegador no permite activar el micrófono. 🤔😯😥");
     }
 } catch (error) {
     alertSToast("top", 10000, "warning", error);
 }
 
 // Dictado de texto ##################################
+const speakButton = $(".speak_btn");
+const voiceSelect = document.getElementById("voice_select");
+const rateInput = document.getElementById("rate_input");
+
 if ("speechSynthesis" in window) {
     const synth = window.speechSynthesis;
 
@@ -227,10 +186,7 @@ if ("speechSynthesis" in window) {
                 voiceSelect.appendChild(option);
 
                 // Check for the specific voice and set it as selected if available
-                if (voice.name.includes("Microsoft Sebastian") && voice.lang === "es-VE") {
-                    voiceSelect.value = index;
-                    defaultOptionAdded = true;
-                } else if (voice.name.includes("Microsoft Raul") && voice.lang === "es-Mx") {
+                if (voice.name.includes("Microsoft Sebastian Online") && voice.lang === "es-VE") {
                     voiceSelect.value = index;
                     defaultOptionAdded = true;
                 }
@@ -254,6 +210,7 @@ if ("speechSynthesis" in window) {
             .replace("#", "")
             .replace("(", "")
             .replace(")", "")
+            .replace("@", "")
             .replace(">", "")
             .replace("<", "")
             .replace("br", "")
@@ -269,11 +226,11 @@ if ("speechSynthesis" in window) {
 
     function ttsCustom(valuetext) {
         if (isSpeaking) {
-            $(".speak_btn i").addClass("fa-volume-high").removeClass("fa-volume-xmark");
+            $("#speak_btn_icon").addClass("fa-regular fa-circle-play").removeClass("fa-solid fa-circle-pause");
             synth.cancel();
             isSpeaking = false;
         } else {
-            $(".speak_btn i").removeClass("fa-volume-high").addClass("fa-volume-xmark");
+            $("#speak_btn_icon").removeClass("fa-regular fa-circle-play").addClass("fa-solid fa-circle-pause");
 
             valuetext = removeEmojis(valuetext);
             utterance = new SpeechSynthesisUtterance(valuetext);
@@ -286,7 +243,7 @@ if ("speechSynthesis" in window) {
 
             utterance.onend = () => {
                 isSpeaking = false;
-                $(".speak_btn i").addClass("fa-volume-high").removeClass("fa-volume-xmark");
+                $("#speak_btn_icon").addClass("fa-regular fa-circle-play").removeClass("fa-solid fa-circle-pause");
             };
         }
     }
@@ -341,7 +298,7 @@ function chatSubmit(e) {
     }, 200);
 
     if (microphonerecord) {
-        $(".speak_btn i").removeClass("fa-volume-high").addClass("fa-spinner fa-spin-pulse");
+        $("#speak_btn_icon").removeClass("fa-regular fa-circle-play").addClass("fa-solid fa-spinner fa-spin-pulse");
     }
 
     fetch(chatForm.action, {
@@ -364,7 +321,9 @@ function chatSubmit(e) {
         .then((data) => {
             if (data.success) {
                 if (microphonerecord) {
-                    $(".speak_btn i").removeClass("fa-volume-high fa-spinner fa-spin-pulse").addClass("fa-volume-xmark");
+                    $("#speak_btn_icon")
+                        .removeClass("fa-regular fa-circle-play fa-spinner fa-spin-pulse")
+                        .addClass("fa-solid fa-circle-pause");
                 }
                 displayChatbotResponse(data.answer);
             } else {
@@ -400,7 +359,7 @@ function displayChatbotResponse(varAnswer) {
     }
 
     if (dataRedirigir && dataRedirigir.trim() !== "") {
-        btnRedir = `<br><br> <a class="btn bg_detail mb-2 max_w300" ${btnBlanck} href="${dataRedirigir}" >Ver Más <i class="fa-solid fa-up-right-from-square ms-1"></i></a>`;
+        btnRedir = `<br><br> <a class="btn bg_detail mb-2 max_w300" ${btnBlanck} href="${dataRedirigir}" >Ver Más <i class="fa-solid fa-arrow-up-right-from-square ms-1"></i></a>`;
     }
 
     lastText = varAnswer.informacion;
@@ -429,7 +388,7 @@ speakButton.on("click", () => {
 
 // Saludo Inicial ######################
 if (contOutput && saludoMostrado) {
-    const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola! Soy Hawky 👋😁, tu asistente virtual de la Universidad Tecnológica de Coahuila. Puedes preguntarme sobre trámites, carreras, costos u otros temas de la universidad. ¿En qué puedo ayudarte? 🫡🤘😋</span></div>`;
+    const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola!!! Soy Hawky 👋😁, tu asistente virtual de la Universidad Tecnológica de Coahuila! Puedes preguntarme sobre tramites, carreras, costos u otros temas de la universidad. ¿En qué puedo ayudarte? 🫡🤘😋</span></div>`;
 
     contOutput.insertAdjacentHTML("beforeend", initialMessage);
     const elementInitMsg = document.querySelector(`.asistent_response[data-tokeid="initialMessage"]`);

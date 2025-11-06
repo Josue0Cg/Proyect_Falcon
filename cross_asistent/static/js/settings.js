@@ -8,8 +8,7 @@ var expressions = {
     name: /^[a-zA-ZÀ-ÿ\s]+$/,
     username: /^(?![0-9_-])[a-zA-Z0-9_-]+$/,
     email: /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*.?&])[A-Za-z\d@#<>:;$!%*.?&]{8,}$/,
-    title: /^[a-zA-ZÀ-ÿ][a-zA-ZÀ-ÿ0-9\s\-_#]*$/,
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*.?&])[A-Za-z\d@$!%*.?&]{8,}$/,
 };
 
 function getCSRFToken() {
@@ -29,9 +28,9 @@ function getCSRFToken() {
 // ##############################################################################################
 $(document).ready(function () {
     try {
-        $("#overlayMenu").click(() => {
-            $("nav button.navbar-toggler").click();
-        });
+        $('#overlayMenu').click(()=>{
+            $('button[data-mdb-collapse-init]').click();
+        })
         // Filtro de busqueda ###################################################################
         var input = $("#searchInput");
         function filtertable() {
@@ -113,41 +112,19 @@ $(document).ready(function () {
         // Quitar clase show #####################################
         $("[data-btn_closed]").on("click", function () {
             var targetId = $(this).data("btn_closed");
-            $(targetId).toggleClass("show");
-
-            if (targetId.includes("slide")) {
-                $(targetId).slideToggle("slow");
-            }
-        });
-
-        // Remover item #####################################
-        $("[data-remove-item]").on("click", function () {
-            var thisItemtId = $(this).data("remove-item");
-            setTimeout(() => {
-                $("#" + thisItemtId).slideUp("slow");
-                setTimeout(() => {
-                    $("#" + thisItemtId).remove();
-                }, 500);
-            }, 1000);
-        });
-
-        // Transferir Cick #####################################
-        $("[data-transfer-click]").on("click", function () {
-            const btnThisId = $(this).data("transfer-click");
-            const btnClickId = $("#" + btnThisId);
-            btnClickId.click();
+            $("#" + targetId).toggleClass("show");
         });
 
         // Resetear formulario / vaciar todo el formulario
-        $("[data-reset_form]").on("click", resetForm);
-        function resetForm() {
+        $("[data-reset_form]").on("click", function () {
             var formId = $(this).data("reset_form");
             var formElement = $("#" + formId)[0];
-            if (formElement) {
-                formElement.reset();
-                setRangeVal();
-            }
-        }
+            setTimeout(() => {
+                if (formElement) {
+                    formElement.reset();
+                }
+            }, 1500);
+        });
 
         // Estilo Texto Google ####################################
         function colorizeGoogle() {
@@ -211,41 +188,32 @@ $(document).ready(function () {
             $("html").attr("data-color_prefer", "blue");
         }
         // Cambiar tema
-        const switchTheme = $("#switchTheme");
-        const switchText = $("#switchText");
-        const htmlElement = $("html");
-
-        const applyTheme = (theme) => {
-            const themeConfig = {
-                light: {
-                    text: "Claro",
-                    dataAttr: "light",
-                    lastLayer: "light-v11",
-                },
-                dark: {
-                    text: "Oscuro",
-                    dataAttr: "dark",
-                    lastLayer: "dark-v11",
-                },
-            };
-
-            const config = themeConfig[theme];
-            switchText.text(config.text);
-            htmlElement.attr("data-mdb-theme", config.dataAttr);
-            localStorage.setItem("data-mdb-theme", config.dataAttr);
-            localStorage.setItem("mapbox-last_layer", config.lastLayer);
-            switchTheme.prop("checked", theme === "light");
-        };
-
-        // Manejar el evento de click del switch
-        switchTheme.on("click", function () {
-            applyTheme(switchTheme.is(":checked") ? "light" : "dark");
+        $("#switchTheme").on("click", function () {
+            if ($("#switchTheme").is(":checked")) {
+                $("#switchText").text("Claro");
+                $("html").attr("data-mdb-theme", "light");
+                localStorage.setItem("data-mdb-theme", "light");
+                localStorage.setItem("mapbox-last_layer", "light-v11");
+            } else {
+                $("#switchText").text("Oscuro");
+                $("html").attr("data-mdb-theme", "dark");
+                localStorage.setItem("data-mdb-theme", "dark");
+                localStorage.setItem("mapbox-last_layer", "dark-v11");
+            }
         });
-
-        // Cargar el tema desde localStorage al iniciar
         const colorTheme = localStorage.getItem("data-mdb-theme");
         if (colorTheme) {
-            applyTheme(colorTheme);
+            if (colorTheme == "light") {
+                $("#switchText").text("Claro");
+                $("#switchTheme").prop("checked", true);
+                $("html").attr("data-mdb-theme", "light");
+                localStorage.setItem("mapbox-last_layer", "light-v11");
+            } else if (colorTheme == "dark") {
+                $("#switchText").text("Oscuro");
+                $("#switchTheme").prop("checked", false);
+                $("html").attr("data-mdb-theme", "dark");
+                localStorage.setItem("mapbox-last_layer", "dark-v11");
+            }
         }
 
         // Firma del blog ##################################################
@@ -388,14 +356,21 @@ $(document).ready(function () {
                         $("#formularioArticulo #titulo").addClass("active").val(data.titulo);
                         const blogContent = data.contenido;
                         tinymce.get("mainTiny").setContent(blogContent);
-                        $("#formularioArticulo .blogSubmit").html('Modificar <i class="fa-regular fa-paper-plane ms-1"></i>');
+                        $("#formularioArticulo .blogSubmit").html(
+                            'Modificar <i class="fa-regular fa-paper-plane ms-1"></i>'
+                        );
                         $("#formularioArticulo .btnModal").slideDown("fast");
                         $("#blogDelete #blogDeleteTitle").text(data.titulo);
                         $("#blogDelete #blogIdDelete").val(blogIdGet);
                     },
                     error: function (error) {
                         console.error("Error al obtener datos: " + error);
-                        alertSToast("center", 8000, "error", "UPS! 😯🤔🧐<br> hubo un error al obtener los datos, consulte la consola.");
+                        alertSToast(
+                            "center",
+                            8000,
+                            "error",
+                            "UPS! 😯🤔🧐<br> hubo un error al obtener los datos, consulte la consola."
+                        );
                     },
                 });
             } else {
@@ -414,62 +389,6 @@ $(document).ready(function () {
         $("[data-select_addClass]").change(function () {
             const newClass = $(this).val();
             $(this).attr("class", `form-select change_bg ${newClass}`);
-        });
-
-        // Poner valor por defecto con blur ######################################
-        $("[data-blur-default]").on("blur", function () {
-            const setDefault = $(this).attr("data-blur-default");
-            const thisValue = $(this).val();
-            const newVal = $(this).attr(setDefault);
-            if (thisValue == "") {
-                $(this).val(newVal);
-            }
-            if (setDefault == "min" && thisValue < newVal) {
-                $(this).val(newVal);
-            }
-        });
-
-        // Transferir valor booleano del checkbox ####################
-        $('input[type="checkbox"][data-transfer-bool]').on("change", function () {
-            var inputId = $(this).attr("data-transfer-bool");
-            if ($(this).is(":checked")) {
-                $(inputId).attr("value", "true");
-            } else {
-                $(inputId).attr("value", "false");
-            }
-        });
-
-        // Valor del input range ####################
-        $('input[type="range"]').on("input", function () {
-            const thisId = $(this).attr("id");
-            const thisValue = $(this).val();
-            $(`[data-range-val="#${thisId}"]`).text(thisValue);
-        });
-
-        function setRangeVal() {
-            $(`[data-range-val]`).each((index, thisObj) => {
-                const getItemRange = $(thisObj).attr("data-range-val");
-                const itemRangeValue = $(`${getItemRange}`).val();
-                $(thisObj).text(itemRangeValue);
-            });
-        }
-        setRangeVal();
-
-        $("[init-wave-click]").on("click", function (event) {
-            var wave = $('<div class="wave"></div>');
-            var offset = $(this).offset();
-            var x = event.pageX - offset.left;
-            var y = event.pageY - offset.top;
-
-            wave.css({
-                width: "50px",
-                height: "50px",
-                top: y - 25 + "px",
-                left: x - 25 + "px",
-            });
-
-            $(this).append(wave);
-            setTimeout(() => wave.remove(), 1000);
         });
 
         //
@@ -541,9 +460,11 @@ function jsonSubmit(e) {
     if (formData.has("contenidoWord")) {
         const contenidoTiny = tinymce.activeEditor.getContent();
         formData.set("contenidoWord", contenidoTiny);
+        // alert(contenidoTiny);
 
         const contenidoTextTiny = tinymce.activeEditor.getContent({ format: "text" });
         formData.set("textTiny", contenidoTextTiny);
+        // alert(contenidoTextTiny);
     }
 
     try {
@@ -565,44 +486,48 @@ function jsonSubmit(e) {
             "X-CSRFToken": formToken,
         },
     })
-        .then(async (response) => {
+        .then((response) => {
             if (!response.ok) {
-                const data = await response.json();
-                console.error(data)
-                throw new Error(data.error || "Error en el formato recivido");
+                return response.json().then((data) => {
+                    throw new Error(data.error || "Error desconocido");
+                });
             }
             return response.json();
         })
         .then((data) => {
             dataMessage = data.message;
             if (data.success == true) {
-                let dataIcon = data.icon || "success";
-                let dataPosition = data.position || "center";
-
+                let dataIcon = "success";
                 function dataRedirect() {
                     window.location.href = data.redirect_url;
                 }
-
-                let alertfunction;
-                switch (data.functions) {
-                    case "singin":
-                        return dataRedirect();
-                    case "reload":
-                        alertfunction = () => location.reload();
-                        break;
-                    case "redirect":
-                        alertfunction = dataRedirect;
-                        break;
-                    case "reset":
-                        alertfunction = () => thisForm.reset();
-                        break;
+                
+                if (data.icon) {
+                    dataIcon = data.icon;
                 }
 
-                setTimeout(() => thisForm.querySelector('button[type="submit"]').removeAttribute("disabled"), 10000);
+                dataPosition = "center";
+                if (data.position) {
+                    dataPosition = data.position;
+                }
+
+                if (data.functions == "singin") {
+                    return dataRedirect();
+                } else if (data.functions == "reload") {
+                    var alertfunction = function () {
+                        location.reload();
+                    };
+                } else if (data.functions == "redirect") {
+                    var alertfunction = function () {
+                        dataRedirect();
+                    };
+                }
+
+                setTimeout(() => thisForm.querySelector('button[type="submit"]').removeAttribute("disabled"), 8000);
+                alertSToast(dataPosition, timerOut, dataIcon, dataMessage, alertfunction);
                 const passwordInputs = document.querySelectorAll('input[type="password"]');
                 passwordInputs.forEach((input) => (input.value = ""));
 
-                alertSToast(dataPosition, timerOut, dataIcon, dataMessage, alertfunction);
             } else if (data.success == false) {
                 console.waning(dataMessage);
                 if (data.valSelector) {
@@ -613,9 +538,10 @@ function jsonSubmit(e) {
                 alertSToast("top", timerOut + 6000, "warning", dataMessage, () => {
                     thisForm.querySelector('button[type="submit"]').removeAttribute("disabled");
                 });
-            }
-            if (data.functions == "submit") {
-                thisForm.querySelector('button[type="submit"]').removeAttribute("disabled");
+            } else {
+                if (data.functions == "submit") {
+                    thisForm.querySelector('button[type="submit"]').removeAttribute("disabled");
+                }
             }
         })
         .catch((error) => {
@@ -650,7 +576,7 @@ if (dropArea) {
         const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i];
-    }
+    };
 
     ["dragenter", "dragover", "dragleave", "drop"].forEach((eventName) => {
         dropArea.addEventListener(eventName, preventDefaults, false);
@@ -684,15 +610,15 @@ if (dropArea) {
             if (validateImage(file)) {
                 validFiles.push(file);
                 previewImage(file, i);
-                ++i;
-                console.log(++i);
+                ++i
+                console.log(++i)
             }
         });
 
         if (validFiles.length > 0) {
-            alertSToast("top-end", 6000, "success", `${validFiles.length} imágenes cargadas <br>correctamente 😋🤘🥳`);
+            alertSToast('top-end', 6000, 'success', `${validFiles.length} imágenes cargadas <br>correctamente 😋🤘🥳`);
         } else {
-            alertSToast("center", 6000, "error", "No se admite este tipo de archivo ⚠️😯😥");
+            alertSToast('center', 6000, 'error', "No se admite este tipo de archivo ⚠️😯😥");
         }
     }
     function validateImage(file) {
@@ -709,17 +635,15 @@ if (dropArea) {
             fileType = fileName.substring(fileType + 1);
             const imgID = cadenaRandom(5, alfanumerico);
 
-            const imageItem = `<div id="img_${imgID}" class="image-item"><img src="${
-                reader.result
-            }" class="img-rounded unfocus-5"><div class="fs-8"><p class="name-file m-0">${fileName}</p><p class="size-file m-0">(${fileType}) ${formatBytes(file.size)}</p></div></div>`;
+            const imageItem = `<div id="img_${imgID}" class="image-item"><img src="${reader.result}" class="img-rounded unfocus-5"><div class="fs-8"><p class="name-file m-0">${fileName}</p><p class="size-file m-0">(${fileType}) ${formatBytes(file.size)}</p></div></div>`;
             imageList.insertAdjacentHTML("beforeend", imageItem);
 
             setTimeout(() => {
                 document.querySelector(`#img_${imgID}`).classList.add("visible");
                 setTimeout(() => {
                     document.querySelector(`#img_${imgID} img`).classList.remove("unfocus-5");
-                }, itemId * 110);
-            }, itemId * 90);
+                }, (itemId)*110);
+            }, (itemId)*90);
         };
     }
 }
