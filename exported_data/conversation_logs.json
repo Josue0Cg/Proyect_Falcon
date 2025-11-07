@@ -1,0 +1,20 @@
+[
+  {
+    "timestamp": "2025-11-07T12:16:48.860854",
+    "question": "Carreras",
+    "response": "¡Hola! En la Universidad Tecnológica de Coahuila (UTC) ofrecemos una variedad de programas educativos diseñados para prepararte para los desafíos del mundo laboral actual. Aquí te presento las carreras que tenemos disponibles:\n\n**Ingenierías:**\n\n*   **Desarrollo y Gestión de Software:** Enfocada en la resolución de problemas tecnológicos y la construcción de soluciones de software. El programa dura 1 año y 8 meses.\n*   **Energías Renovables:** Diseñada para formar profesionales capaces de diseñar y dirigir proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables.\n*   **Entornos Virtuales y Negocios Digitales:** Forma ingenieros capaces de dirigir proyectos de negocios digitales y soluciones de entornos virtuales.\n*   **Redes Inteligentes y Ciberseguridad:** Forma ingenieros con competencias para desempeñarse en el ámbito de las tecnologías de la información, con un enfoque en redes inteligentes y ciberseguridad. El programa dura 1 año y 8 meses.\n\n**Licenciaturas:**\n\n*   **Innovación de Negocios y Mercadotecnia:** Programa de 1 año y 8 meses que prepara a los estudiantes para áreas como finanzas, mercadotecnia, publicidad, desarrollo de productos, innovación comercial, etc.\n\nPara obtener información más detallada sobre cada carrera, incluyendo planes de estudio específicos y requisitos de admisión, te recomiendo visitar directamente la página oficial de la UTC:\n\n*   **Sitio web de la UTC:** [https://www.utcoahuila.edu.mx/](https://www.utcoahuila.edu.mx/)\n\nEn el sitio web, podrás encontrar información actualizada sobre costos de matrícula, fechas de admisión, requisitos específicos por carrera, así como información de contacto para resolver cualquier duda adicional que puedas tener.\n\n¡Espero que esta información te sea útil! Si tienes alguna otra pregunta, no dudes en consultarme.",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 1853,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T12:25:01.013383",
+    "question": "Que dia es hoy",
+    "response": "Hoy es domingo, 2 de junio de 2024.",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 35,
+    "contains_utc_info": false
+  }
+]

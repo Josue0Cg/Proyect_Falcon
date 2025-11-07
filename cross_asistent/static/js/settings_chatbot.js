@@ -429,7 +429,7 @@ speakButton.on("click", () => {
 
 // Saludo Inicial ######################
 if (contOutput && saludoMostrado) {
-    const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola! Soy Hawky 👋😁, tu asistente virtual de la Universidad Tecnológica de Coahuila. Puedes preguntarme sobre trámites, carreras, costos u otros temas de la universidad. ¿En qué puedo ayudarte? 🫡🤘😋</span></div>`;
+    const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola! Soy FALCON �, tu asistente virtual especializado de la Universidad Tecnológica de Coahuila. Estoy aquí para brindarte información actualizada sobre nuestros programas académicos, incluyendo la nueva carrera de Inteligencia Artificial, trámites, admisiones y todo lo relacionado con nuestra institución. ¿En qué puedo ayudarte hoy?</span></div>`;
 
     contOutput.insertAdjacentHTML("beforeend", initialMessage);
     const elementInitMsg = document.querySelector(`.asistent_response[data-tokeid="initialMessage"]`);

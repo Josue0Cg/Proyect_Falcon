@@ -47,6 +47,9 @@ error_messages = {
     504: 'El servidor no pudo obtener una respuesta a tiempo. Revisa tu conexión e intenta nuevamente más tarde.'
 }
 
+def cerrar_sesion(request):
+    logout(request) 
+    return redirect('home') 
 
 def index(request):
     if not request.user.is_staff:

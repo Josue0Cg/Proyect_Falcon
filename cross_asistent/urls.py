@@ -26,6 +26,7 @@ urlpatterns = [
     path('logout/', views.singout, name='singout'),
     path('acceder/', views.singinpage, name='singin'),
     path('registro/', views.singup, name='singup'),
+    path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
     
     # Administracion y programacion ----------------------------------------------------------
     path('administracion/', views.vista_programador, name='vista_programador'),
