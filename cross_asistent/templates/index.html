@@ -28,15 +28,28 @@
                                     <h2>
                                         {% autoescape off %} {{ banner.titulo }} {% endautoescape %}
                                     </h2>
-                                    <!-- <div class="div-dec"></div> -->
                                     <p class="slider-content_desc">{{ banner.descripcion }}</p>
                                     {% endif %}
+
+                                    <!-- Botones del banner -->
                                     <div class="buttons">
                                         {% if banner.redirigir %}
-                                        <a href="{{banner.redirigir}}" target="_blank" rel="noopener noreferrer" class="btn_slide btn btn_detail btn-lg">
+                                        <a href="{{banner.redirigir}}" target="_blank" rel="noopener noreferrer"
+                                        class="btn_slide btn btn_detail btn-lg">
                                             Ver más <i class="fa-solid fa-up-right-from-square ms-1"></i>
                                         </a>
                                         {% endif %}
+                                    </div>
+                                    <div class="buttons mt-5 custom-banner-buttons">
+                                        <a href="https://utc.edu.mx" target="_blank" rel="noopener noreferrer"
+                                        class="btn_slide btn btn_detail btn-lg custom-btn-banner">
+                                            Ver más <i class="fa-solid fa-up-right-from-square ms-1"></i>
+                                        </a>
+
+                                        <a href="{% url 'about' %}"
+                                        class="btn_slide btn btn_detail btn-lg custom-btn-banner {% if active_page == 'about' %}active{% endif %}">
+                                            Acerca de
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -130,6 +143,5 @@
 {% endblock %}
 
 {% block scripts_end %}
-<script src="{% static 'js/swiper.min.js' %}"></script>
 <script src="{% static 'js/settings_chatbot.js' %}"></script>
 {% endblock %}
