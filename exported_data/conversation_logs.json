@@ -52,5 +52,68 @@
     "user_feedback": null,
     "response_length": 2203,
     "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T15:21:57.602759",
+    "question": "Como estas",
+    "response": "¡Hola! Como FALCON, el asistente virtual de la Universidad Tecnológica de Coahuila (UTC), me encuentro listo para ayudarte. Estoy aquí para proporcionarte información precisa y útil sobre nuestra universidad, desde los programas académicos hasta los servicios estudiantiles. ¿En qué puedo asistirte hoy?",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 303,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T15:22:18.634691",
+    "question": "Carreras",
+    "response": "¡Claro! En la Universidad Tecnológica de Coahuila (UTC) contamos con una oferta educativa diseñada para responder a las necesidades del mercado laboral actual. Aquí te presento las ingenierías y la licenciatura que puedes estudiar con nosotros:\n\n**Ingenierías:**\n\n*   **Desarrollo y Gestión de Software:** Enfocada en la resolución de problemas tecnológicos y la construcción de soluciones de software.\n*   **Energías Renovables:** Para diseñar y dirigir proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables.\n*   **Entornos Virtuales y Negocios Digitales:** Dirigida a la gestión de proyectos de negocios digitales y soluciones de entornos virtuales.\n*   **Redes Inteligentes y Ciberseguridad:** Forma ingenieros capaces de gestionar la seguridad informática y la administración de redes empresariales.\n\n**Licenciatura:**\n\n*   **Innovación de Negocios y Mercadotecnia:** Con una duración de 1 año y 8 meses, te prepara para áreas como finanzas, mercadotecnia, publicidad, y desarrollo de productos.\n\n**Información Adicional:**\n\n*   **Duración:** Los programas de ingeniería tienen una duración de 1 año y 8 meses.\n*   **Plan de Estudios:** Cada programa cuenta con un plan de estudios específico que combina materias teóricas y prácticas, culminando con una estadía profesional.\n\n**Proceso de Admisión:**\n\nPara conocer los detalles sobre el proceso de admisión, te recomiendo visitar la página oficial de la UTC:\n\n*   **UTC Admisiones:** [https://www.utcoahuila.edu.mx/](https://www.utcoahuila.edu.mx/)\n\n**Información de Contacto:**\n\nSi tienes preguntas adicionales, puedes contactarnos a través de los siguientes medios:\n\n*   **Teléfono:** (Proporcionar el número de teléfono si está disponible)\n*   **Correo Electrónico:** (Proporcionar el correo electrónico si está disponible)\n*   **Dirección:** (Proporcionar la dirección si está disponible)\n\nEspero que esta información te sea útil. ¡No dudes en preguntar si tienes más dudas!",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 1980,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T15:30:41.278574",
+    "question": "carreras",
+    "response": "La Universidad Tecnológica de Coahuila (UTC) ofrece una variedad de programas de ingeniería y licenciaturas diseñados para preparar a los estudiantes para los desafíos del mundo laboral actual. Los programas tienen una duración de 1 año y 8 meses (5 cuatrimestres) cada uno.\n\n**Ingenierías:**\n\n*   **Desarrollo y Gestión de Software:** Forma ingenieros capaces de resolver problemas tecnológicos y construir soluciones de software, gestionando proyectos e integrando metodologías y herramientas de desarrollo. Los egresados pueden desempeñarse como Programador Full Stack, Desarrollador de Apps, Líder de Proyectos de Desarrollo de Software, entre otros.\n*   **Energías Renovables:** Capacita para diseñar y dirigir proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables, con un enfoque en la competitividad y el desarrollo sustentable. Los ingenieros pueden trabajar como gerentes de suministro de energía, directores de proyectos en eficiencia energética, entre otros.\n*   **Entornos Virtuales y Negocios Digitales:** Forma ingenieros capaces de dirigir proyectos de negocios digitales y soluciones de entornos virtuales, con habilidades en desarrollo de aplicaciones avanzadas, herramientas de inteligencia en negocios y soluciones inmersivas. Pueden desempeñarse como directores de proyectos digitales, desarrolladores de videojuegos, modeladores 3D, entre otros.\n*   **Redes Inteligentes y Ciberseguridad:** Forma ingenieros con competencias para desempeñarse en el ámbito de las tecnologías de la información, con habilidades en análisis, síntesis, investigación y gestión de proyectos. Pueden trabajar como ejecutivos integradores de tecnologías, diseñadores de sistemas de información, entre otros.\n\n**Licenciatura:**\n\n*   **Innovación de Negocios y Mercadotecnia:** Prepara a los estudiantes para desempeñarse en áreas clave como finanzas, mercadotecnia, publicidad, desarrollo de productos, innovación comercial, planeación y evaluación de proyectos, capital humano y relaciones públicas. Los licenciados pueden trabajar como directores comerciales, gerentes de mercadotecnia, asesores en desarrollo de negocios, entre otros.\n\nPara obtener información más detallada sobre cada programa, incluyendo el plan de estudios completo, los requisitos de admisión y los costos actualizados, te recomiendo visitar el sitio web oficial de la UTC: [https://www.utc.edu.mx/](https://www.utc.edu.mx/)\n\nEn el sitio web también encontrarás información sobre los procesos y fechas de admisión, así como los datos de contacto actualizados para comunicarte directamente con la universidad y resolver tus dudas.",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 2647,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T16:03:37.574303",
+    "question": "carreras",
+    "response": "La Universidad Tecnológica de Coahuila (UTC) ofrece diversas opciones de programas educativos enfocados en las necesidades del mercado laboral actual. Actualmente, contamos con las siguientes ingenierías y licenciaturas:\n\n**Ingenierías:**\n\n*   **Desarrollo y Gestión de Software:** Enfocada en la construcción de soluciones de software a través de la gestión de proyectos y la integración de metodologías y herramientas de desarrollo.\n*   **Energías Renovables:** Dirigida al diseño y dirección de proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables, con un enfoque en la competitividad y el desarrollo sustentable.\n*   **Entornos Virtuales y Negocios Digitales:** Capacita para dirigir proyectos de negocios digitales y soluciones de entornos virtuales, con énfasis en el desarrollo de aplicaciones avanzadas, herramientas de inteligencia en negocios y soluciones inmersivas.\n*   **Redes Inteligentes y Ciberseguridad:** Forma profesionales con competencias para desempeñarse en el ámbito local, regional y nacional, con habilidades en análisis, síntesis, investigación y gestión de tecnologías de la información.\n\n**Licenciaturas:**\n\n*   **Innovación de Negocios y Mercadotecnia:** Prepara a los estudiantes para desempeñarse en áreas clave como finanzas, mercadotecnia, publicidad, desarrollo de productos, innovación comercial, y más.\n\n**Información Adicional:**\n\n*   **Duración:** Las ingenierías y licenciaturas tienen una duración de 1 año y 8 meses.\n\nTe recomiendo visitar el sitio web oficial de la UTC para obtener información más detallada sobre cada programa, incluyendo planes de estudio actualizados, requisitos de admisión, costos y fechas importantes: [https://www.utcoahuila.edu.mx/](https://www.utcoahuila.edu.mx/)\n\nAdemás, te sugiero contactar directamente al departamento de admisiones de la UTC para resolver cualquier duda específica que puedas tener:\n\n*   **Teléfono:** (Proporcionar el número de teléfono de la UTC si está disponible)\n*   **Correo electrónico:** (Proporcionar el correo electrónico de contacto de la UTC si está disponible)\n\nEspero que esta información sea útil. ¡Mucho éxito en tu búsqueda de la carrera ideal!",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 2201,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T16:32:26.373505",
+    "question": "Carrera",
+    "response": "¡Hola! En la Universidad Tecnológica de Coahuila (UTC) contamos con una variedad de programas educativos diseñados para prepararte para el futuro. Actualmente, ofrecemos las siguientes ingenierías y licenciaturas:\n\n**Ingenierías:**\n\n*   **Desarrollo y Gestión de Software:** Enfocada en la construcción de soluciones de software, gestión de proyectos y metodologías de desarrollo.\n\n*   **Energías Renovables:** Dedicada al diseño y dirección de proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables.\n\n*   **Entornos Virtuales y Negocios Digitales:** Centrada en la dirección de proyectos de negocios digitales y soluciones de entornos virtuales, incluyendo aplicaciones avanzadas e inteligencia de negocios.\n\n*   **Redes Inteligentes y Ciberseguridad:** Formación en tecnologías de la información con habilidades en análisis, gestión de seguridad informática y administración de redes.\n\n**Licenciaturas:**\n\n*   **Innovación de Negocios y Mercadotecnia:** Programa que te prepara para áreas clave como finanzas, mercadotecnia, publicidad y desarrollo de productos.\n\nPara obtener información más detallada sobre cada programa, te recomiendo visitar las siguientes secciones de nuestra página web:\n\n*   [Oferta Educativa UTC](https://www.utcoahuila.edu.mx/oferta-educativa)\n\nAhí encontrarás los planes de estudio, perfiles de egreso y más detalles específicos de cada carrera.\n\n**Información Adicional:**\n\n*   **Proceso de Admisión:** Para conocer los requisitos y fechas importantes del proceso de admisión, te sugiero visitar la sección de [Admisiones UTC](https://www.utcoahuila.edu.mx/admisiones).\n\n*   **Costos:** Los costos de matrícula y cuotas pueden variar. Te recomiendo consultar la información más actualizada en la sección de [Servicios Escolares UTC](https://www.utcoahuila.edu.mx/servicios-escolares) o contactar directamente al departamento de finanzas de la universidad.\n\n*   **Contacto:** Para cualquier duda o consulta, puedes comunicarte con nosotros a través de los siguientes medios:\n\n    *   **Teléfono:** (Proporcionar el número de teléfono de la UTC)\n    *   **Correo electrónico:** (Proporcionar el correo electrónico de contacto de la UTC)\n\n¡Espero que esta información te sea útil! Si tienes alguna otra pregunta, no dudes en consultarme.",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 2310,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T16:32:38.766263",
+    "question": "cuantas carreras hay?",
+    "response": "Actualmente, la Universidad Tecnológica de Coahuila (UTC) ofrece 5 programas de ingenierías y licenciaturas enfocadas en las áreas de negocios, tecnologías y energías renovables. Estas son:\n\n1.  **Licenciatura en Innovación de Negocios y Mercadotecnia:**  Con una duración de 1 año y 8 meses, esta licenciatura te prepara para áreas como finanzas, mercadotecnia, publicidad, desarrollo de productos, innovación comercial, planeación y evaluación de proyectos.\n2.  **Ingeniería en Desarrollo y Gestión de Software:**  Este programa, también de 1 año y 8 meses, te capacita para resolver problemas tecnológicos y construir soluciones de software mediante la gestión de proyectos.\n3.  **Ingeniería en Energías Renovables:**  Aprenderás a diseñar y dirigir proyectos relacionados con el uso eficiente de la energía y la implementación de energías renovables.\n4.  **Ingeniería en Entornos Virtuales y Negocios Digitales:**  Te prepara para dirigir proyectos de negocios digitales y soluciones de entornos virtuales, abarcando el desarrollo de aplicaciones avanzadas y herramientas de inteligencia en negocios.\n5.  **Ingeniería en Redes Inteligentes y Ciberseguridad:**  Este programa te brinda las competencias necesarias para desempeñarte en el ámbito de las tecnologías de la información, con un enfoque en la seguridad y la gestión de redes.\n\nTe recomiendo visitar el sitio web oficial de la UTC para obtener información más detallada sobre cada programa, incluyendo planes de estudio actualizados, requisitos de admisión y costos: [https://www.utcoahuila.edu.mx/](https://www.utcoahuila.edu.mx/)\n\nSi tienes alguna otra pregunta sobre alguna carrera en específico, no dudes en preguntar.",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 1685,
+    "contains_utc_info": true
+  },
+  {
+    "timestamp": "2025-11-07T16:32:43.782281",
+    "question": "que dia es hoy",
+    "response": "Hoy es domingo, 19 de mayo de 2024. Espero que tengas un excelente día. ¿Hay algo en lo que te pueda ayudar relacionado con la Universidad Tecnológica de Coahuila?",
+    "context_items_used": 5,
+    "user_feedback": null,
+    "response_length": 163,
+    "contains_utc_info": true
   }
 ]

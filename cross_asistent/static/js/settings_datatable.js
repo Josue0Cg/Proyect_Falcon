@@ -187,7 +187,14 @@ window.addEventListener("load", async () => {
 // Abrir modal segun su data
 function openModal(idMdbModal, dataid) {
     $(idMdbModal).data("get-info", dataid);
-    $(idMdbModal).modal("show");
+    const modalElement = document.querySelector(idMdbModal);
+
+    if (modalElement) {
+        const modalInstance = mdb.Modal.getInstance(modalElement) || new mdb.Modal(modalElement);
+        modalInstance.show();
+    } else {
+        console.error("No se encontró el elemento del modal:", idMdbModal);
+    }
 }
 
 function fetchData(modal, dataPost, dataid, errorMsg, successCallback) {
