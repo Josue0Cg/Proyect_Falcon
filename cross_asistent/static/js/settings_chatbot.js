@@ -7,6 +7,9 @@ let newMessageChat = false;
 let lastText = "";
 let microphoneSpeech = true;
 let isSpeaking = false;
+let synth; // <--- MOVIDO AQUÍ (Declaración global)
+let voices = [];
+let utterance;
 
 // Activar y desactivar micrófono ###########################################
 const recVoice = $(".controls_btn_microphone");
@@ -18,14 +21,18 @@ let recognizing = false;
 
 // Dictado de texto ##################################
 const speakButton = $(".speak_btn");
-const voiceSelect = document.getElementById("voice_select");
-const rateInput = document.getElementById("rate_input");
 
 // ##############################################################################################
 // ###################################### Funciones Jquery ######################################
 // ##############################################################################################
 $(document).ready(function () {
     try {
+        // --- INICIO: Variables movidas aquí ---
+        const voiceSelect = document.getElementById("voice_select");
+        const rateInput = document.getElementById("rate_input");
+        const contOutput = document.querySelector("#output");
+        // --- FIN: Variables movidas aquí ---
+
         // abrir menu del asistente ##############################################################
         recVoice.click(() => {
             $(".asistent_group").addClass("open open_controls");
@@ -107,6 +114,48 @@ $(document).ready(function () {
 
         // ChatGPT Submit ####################################################
         $("#chatForm").submit(chatSubmit);
+
+        // --- INICIO: Código de inicialización movido aquí ---
+
+        // Cargar voces para el dictado
+        if ("speechSynthesis" in window) {
+            if (synth.onvoiceschanged !== undefined) {
+                synth.onvoiceschanged = loadVoices;
+            }
+            loadVoices(); // Llama a loadVoices después de asegurar que voiceSelect existe
+        }
+
+        // Manejar click en botón de hablar para mensaje inicial
+        let initialText = $('[data-tokeid="initialMessage"]').text();
+        speakButton.on("click", () => {
+            if (!newMessageChat) {
+                ttsCustom(initialText);
+            }
+        });
+
+        // Saludo Inicial (depende de contOutput)
+        if (contOutput && saludoMostrado) {
+            const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola! Soy FALCON , tu asistente virtual especializado de la Universidad Tecnológica de Coahuila. Estoy aquí para brindarte información actualizada sobre nuestros programas académicos, incluyendo la nueva carrera de Inteligencia Artificial, trámites, admisiones y todo lo relacionado con nuestra institución. ¿En qué puedo ayudarte hoy?</span></div>`;
+
+            contOutput.insertAdjacentHTML("beforeend", initialMessage);
+            const elementInitMsg = document.querySelector(`.asistent_response[data-tokeid="initialMessage"]`);
+            setTimeout(function () {
+                elementInitMsg.classList.add("visible");
+            }, 500);
+        }
+
+        // Hacer scroll con un nuevo mensaje en el chat (depende de contOutput)
+        if (contOutput) {
+            // La función scrollToBottom AHORA ES GLOBAL
+            // pero el observador se inicializa aquí
+            var observer = new MutationObserver(() => {
+                scrollToBottom();
+            });
+            scrollToBottom();
+            observer.observe(contOutput, { childList: true, subtree: true });
+        }
+        // --- FIN: Código de inicialización movido aquí ---
+
     } catch (error) {
         console.error("Error Inesperado: ", error);
         alertSToast("center", 8000, "error", `😥 Ha ocurrido un error inesperado. código: #304`);
@@ -116,6 +165,16 @@ $(document).ready(function () {
 // ##############################################################################################
 // #################################### Funciones JAVASCRIPT ####################################
 // ##############################################################################################
+
+// --- INICIO: Función Global scrollToBottom ---
+// Definida globalmente para que chatSubmit y displayChatbotResponse la vean
+function scrollToBottom() {
+    const contOutput = document.querySelector("#output");
+    if (contOutput) {
+        contOutput.scrollTop = contOutput.scrollHeight;
+    }
+}
+// --- FIN: Función Global scrollToBottom ---
 
 // Activar y desactivar micrófono ###########################################
 try {
@@ -208,12 +267,14 @@ try {
 
 // Dictado de texto ##################################
 if ("speechSynthesis" in window) {
-    const synth = window.speechSynthesis;
-
-    let voices = [];
-    let utterance;
+    synth = window.speechSynthesis; // Asignar el objeto synth (variable global)
 
     function loadVoices() {
+        const voiceSelect = document.getElementById("voice_select");
+        if (!voiceSelect) {
+            return;
+        }
+
         voices = synth.getVoices();
         voiceSelect.innerHTML = "";
 
@@ -226,7 +287,6 @@ if ("speechSynthesis" in window) {
                 option.value = index;
                 voiceSelect.appendChild(option);
 
-                // Check for the specific voice and set it as selected if available
                 if (voice.name.includes("Microsoft Sebastian") && voice.lang === "es-VE") {
                     voiceSelect.value = index;
                     defaultOptionAdded = true;
@@ -237,16 +297,10 @@ if ("speechSynthesis" in window) {
             }
         });
 
-        // If the default voice is not found, select the first Spanish voice available
         if (!defaultOptionAdded && voiceSelect.options.length > 0) {
             voiceSelect.value = 0;
         }
     }
-
-    if (synth.onvoiceschanged !== undefined) {
-        synth.onvoiceschanged = loadVoices;
-    }
-    loadVoices();
 
     function removeEmojis(text) {
         return text
@@ -268,6 +322,11 @@ if ("speechSynthesis" in window) {
     }
 
     function ttsCustom(valuetext) {
+        const voiceSelect = document.getElementById("voice_select");
+        const rateInput = document.getElementById("rate_input");
+
+        if (!voiceSelect || !rateInput) return;
+
         if (isSpeaking) {
             $(".speak_btn i").addClass("fa-volume-high").removeClass("fa-volume-xmark");
             synth.cancel();
@@ -295,23 +354,18 @@ if ("speechSynthesis" in window) {
     alertSToast("center", 7000, "warning", "Al parecer tu navegador no permite la API de síntesis de voz. 😯😥🥲");
 }
 
-// Espera a que el DOM se cargue para manejar el botón de hablar
-document.addEventListener("DOMContentLoaded", () => {
-    let initialText = $('[data-tokeid="initialMessage"]').text();
-    speakButton.on("click", () => {
-        if (!newMessageChat) {
-            ttsCustom(initialText);
-        }
-    });
-});
-
 // Función de preguntar a chatGPT https://platform.openai.com/ #################################
-const contOutput = document.querySelector("#output");
 let audioEnabled = true;
 let saludoMostrado = true;
 
 // Función para Mostrar y Mandar la Pregunta del Usuario ################
 function chatSubmit(e) {
+    const contOutput = document.querySelector("#output");
+    if (!contOutput) {
+        console.error("Error: #output no encontrado en chatSubmit");
+        return;
+    }
+
     newMessageChat = true;
     e.preventDefault();
     const pregunta = txtQuestion.value;
@@ -330,14 +384,19 @@ function chatSubmit(e) {
     const user_submit = document.querySelector(`.user_submit[data-tokeid="${valID}"]`);
     setTimeout(() => {
         user_submit.classList.add("visible");
-        setTimeout(scrollToBottom, 500);
+        scrollToBottom(); // <--- Ahora es global
     }, 20);
 
     const loadInfo = `<div class="chat_msg asistent_response my-4" data-tokeid="loadInfoDelete"><div class="pulse-container"><div class="pulse-bubble bg_detail pulse-bubble-1"></div><div class="pulse-bubble bg_detail pulse-bubble-2"></div><div class="pulse-bubble bg_detail pulse-bubble-3"></div></div></div>`;
     contOutput.insertAdjacentHTML("beforeend", loadInfo);
     setTimeout(function () {
-        document.querySelector(`.asistent_response[data-tokeid="loadInfoDelete"]`).classList.add("visible");
-        setTimeout(scrollToBottom, 500);
+        // --- INICIO: Corrección de Race Condition ---
+        const loadingBubble = document.querySelector(`.asistent_response[data-tokeid="loadInfoDelete"]`);
+        if (loadingBubble) { // Solo añade la clase si la burbuja aún existe
+            loadingBubble.classList.add("visible");
+        }
+        // --- FIN: Corrección de Race Condition ---
+        scrollToBottom(); // <--- Ahora es global
     }, 200);
 
     if (microphonerecord) {
@@ -380,6 +439,9 @@ function chatSubmit(e) {
 
 // Función para Manejar y Mostrar la Respuesta del Chatbot #################
 function displayChatbotResponse(varAnswer) {
+    const contOutput = document.querySelector("#output");
+    if (!contOutput) return;
+
     const tokendid = cadenaRandom(5, alfabetico);
     const valID = `uuid${tokendid}`;
 
@@ -409,10 +471,17 @@ function displayChatbotResponse(varAnswer) {
 
     contOutput.insertAdjacentHTML("beforeend", htmlBlock);
     const asistent_response = document.querySelector(`.asistent_response[data-tokeid="${valID}"]`);
-    document.querySelector(`.asistent_response[data-tokeid="loadInfoDelete"]`).remove();
+    
+    // --- INICIO: Corrección de Race Condition ---
+    const loadingBubble = document.querySelector(`.asistent_response[data-tokeid="loadInfoDelete"]`);
+    if (loadingBubble) { // Solo elimina la burbuja si todavía existe
+        loadingBubble.remove();
+    }
+    // --- FIN: Corrección de Race Condition ---
+
     setTimeout(function () {
         asistent_response.classList.add("visible");
-        setTimeout(scrollToBottom, 350);
+        scrollToBottom(); // <--- Ahora es global
 
         if (microphonerecord) {
             let speachText = $(`[data-tokeid="${valID}"]`).text();
@@ -426,32 +495,6 @@ speakButton.on("click", () => {
         ttsCustom(lastText);
     }
 });
-
-// Saludo Inicial ######################
-if (contOutput && saludoMostrado) {
-    const initialMessage = `<div class="chat_msg asistent_response" data-tokeid="initialMessage"><span>¡Hola! Soy FALCON �, tu asistente virtual especializado de la Universidad Tecnológica de Coahuila. Estoy aquí para brindarte información actualizada sobre nuestros programas académicos, incluyendo la nueva carrera de Inteligencia Artificial, trámites, admisiones y todo lo relacionado con nuestra institución. ¿En qué puedo ayudarte hoy?</span></div>`;
-
-    contOutput.insertAdjacentHTML("beforeend", initialMessage);
-    const elementInitMsg = document.querySelector(`.asistent_response[data-tokeid="initialMessage"]`);
-    setTimeout(function () {
-        elementInitMsg.classList.add("visible");
-    }, 500);
-}
-
-// Hacer scroll con un nuevo mensaje en el chat ####################
-function scrollToBottom() {
-    contOutput.scrollTop = contOutput.scrollHeight;
-}
-if (contOutput) {
-    function scrollToBottom() {
-        contOutput.scrollTop = contOutput.scrollHeight;
-    }
-    var observer = new MutationObserver(() => {
-        scrollToBottom();
-    });
-    scrollToBottom();
-    observer.observe(contOutput, { childList: true, subtree: true });
-}
 
 function alertSToast(posittionS, timerS, iconS, titleS, didDestroyS) {
     const Toast = Swal.mixin({
