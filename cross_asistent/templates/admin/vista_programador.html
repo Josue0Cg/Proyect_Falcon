@@ -1,4 +1,4 @@
-{% extends 'base/widget.html' %}
+{% extends 'base/widgetadm.html' %}
 {% load static %}
 {% block title %}Administracion {% if user.is_staff %}- Programacion{% endif %} | Inicio{% endblock %}
 {% block link_home %}{% url 'vista_programador' %}{% endblock %}
