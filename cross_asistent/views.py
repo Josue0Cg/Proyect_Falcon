@@ -27,6 +27,9 @@ def obtener_configuraciones():
             'about_textsecond': getattr(oneconfig, 'about_text_second', None),
         }
 
+def cerrar_sesion(request):
+    logout(request) 
+    return redirect('home') 
 
 def index(request):
     if not request.user.is_staff:

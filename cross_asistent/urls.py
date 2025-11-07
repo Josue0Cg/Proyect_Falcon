@@ -3,7 +3,6 @@ from . import chatbot, functions, views, imex_port
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns = [
     # Páginas de inicio ----------------------------------------------------------
     path('', views.index, name='home'),
@@ -25,6 +24,9 @@ urlpatterns = [
     path('logout/', views.singout, name='singout'),
     path('acceder/', views.singinpage, name='singin'),
     path('registro/', views.singup, name='singup'),
+
+    # ... tus otras rutas
+    path('cerrar_sesion/', views.cerrar_sesion, name='cerrar_sesion'),
     
     # Administracion y programacion ----------------------------------------------------------
     path('administracion/', views.vista_programador, name='vista_programador'),
