@@ -1,55 +1,16 @@
-{% extends "base/widget.html" %}
+{% extends "base.html" %}
 {% load static %}
 
-{% block title %}UTC | Más Universidad, Más UTC{% endblock %}
+{% block title %}Inicio - Más Universidad, Más UTC{% endblock %}
+
 
 {% block extra_head %}
-<link rel="stylesheet" href="{% static 'css/styles.css' %}">
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-
-<style>
-    /* Quitar el padding y márgenes que impone el widget */
-    body {
-        padding-top: 0 !important;
-        margin: 0 !important;
-    }
-
-    /* Ocultar NAVBAR del widget sólo en esta página */
-    nav.navbar {
-        display: none !important;
-    }
-
-    /* Quitar contenedor y overlay que el widget añade */
-    .container.container-fluid {
-        padding: 0 !important;
-        margin: 0 !important;
-        max-width: 100% !important;
-    }
-
-    main, .main_anchor {
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-</style>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
 {% endblock %}
 
-{% block link_default %}
-<!-- vacío para evitar que aparezcan botones o enlaces del widget -->
-{% endblock %}
 
 {% block content %}
-<!-- NAVBAR ORIGINAL -->
-<nav>
-    <img src="{% static 'img/Logo.png' %}" alt="UTC">
-    <a href="/">Inicio</a>
-    <a href="{% url 'faq' %}">Preguntas</a>
-    <a href="{% url 'map' %}">Mapa</a>
-    <a href="{% url 'calendario' %}">Calendario</a>
-    <a href="{% url 'blog' %}">Blog</a>
-    <a href="{% url 'singin' %}" class="btn-acceder-navbar">Acceder</a>
-</nav>
 
-<!-- HERO -->
 <section class="hero">
 
     <div class="hero-left">
@@ -58,7 +19,7 @@
         <div class="hero-text">
             <h1>Más Universidad,<br>Más <span>UTC</span>!!!</h1>
             <p>Únete y Forma Tu Futuro!</p>
-             <a href="{{ hero_link }}" target="_blank" class="hero-btn"> Ver más ></a>
+            <a href="{{ hero_link }}" target="_blank" class="hero-btn">Ver más </a>
             <a href="{% url 'about' %}" class="hero-btn btn-about"> Acerca de</a>
         </div>
     </div>
@@ -68,4 +29,5 @@
     <img src="{% static 'img/Alcon.png' %}" class="alcon-fixed" alt="Mascota UTC">
 
 </section>
+
 {% endblock %}
