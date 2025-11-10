@@ -160,6 +160,29 @@
     --fc-page-bg-color: #333;
 }
 
+/* Más separación hacia abajo */
+.custom-banner-buttons {
+    margin-top: 120px !important;
+    margin-left: -40px !important;
+}
+
+/* Color solicitado */
+.custom-btn-banner {
+    background-color: #273c67 !important;
+    border-color: #273c67 !important;
+    color: #fff !important;
+    padding: 12px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+/* Hover más oscuro */
+.custom-btn-banner:hover {
+    background-color: #1e3053 !important;
+    border-color: #1e3053 !important;
+}
+
 /*########################### Generales ###########################*/
 html,
 body {
